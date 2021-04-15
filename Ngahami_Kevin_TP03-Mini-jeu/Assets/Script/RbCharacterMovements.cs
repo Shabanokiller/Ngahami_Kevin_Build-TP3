@@ -7,7 +7,7 @@ public class RbCharacterMovements : MonoBehaviour
     public float runningspeed = 5f;
     public float walkinggspeed = 1.5f;
     public float jumpHeight = 1f;
-
+    public float Health = 100f;
     // Transform de la position des pieds
     public Transform feetPosition;
 

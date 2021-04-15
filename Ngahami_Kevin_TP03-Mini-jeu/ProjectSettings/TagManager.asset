@@ -19,6 +19,7 @@ TagManager:
   - MainInventory
   - DraggingItem
   - Timer
+  - Swat
   layers:
   - Default
   - TransparentFX

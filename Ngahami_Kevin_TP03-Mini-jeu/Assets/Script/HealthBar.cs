@@ -9,7 +9,7 @@ public class HealthBar : MonoBehaviour
     public float maxHP = 100f;
     public float hpBarLenght;
     public float pourcentageDeHp;
-    public Texture2D hpBarTexture;
+    //public Texture2D hpBarTexture;
 
     void OnGUI()
     {

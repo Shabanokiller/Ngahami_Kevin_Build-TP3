@@ -80,25 +80,27 @@ public class WeaponManager : MonoBehaviour
 
         RaycastHit hit;
 
-
+        //// Verification de la distance
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2, Screen.height / 2);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-        if (Physics.Raycast(ray, out hit, Camera.main.farClipPlane))
-        {
-            // nous permet de faire voler nos barril lorsq'on tire dessus
-            if (hit.transform.gameObject.tag == "Barril")
-            {
-                hit.rigidbody.AddForceAtPosition(transform.TransformDirection(Vector3.forward) * 1000, hit.normal);
-            }
-            Debug.Log("Touche : " + hit.transform.name);
-        }
+        //if (Physics.Raycast(ray, out hit, Camera.main.farClipPlane))
+        //{
+        //    //if(hit.distance <= dis)
+
+        //    // nous permet de faire voler nos barril lorsq'on tire dessus
+        //    if (hit.transform.gameObject.tag == "Barril")
+        //    {
+        //        hit.rigidbody.AddForceAtPosition(transform.TransformDirection(Vector3.forward) * 1000, hit.normal);
+        //    }
+        //    Debug.Log("Touche : " + hit.transform.name);
+        //}
 
         if (Physics.Raycast(ray, out hit, Camera.main.farClipPlane))
         {
-            // nous permet de faire voler nos barril lorsq'on tire dessus
-            if (hit.transform.gameObject.tag == "Untagged")
+            // nous permet de tuer notre ennemie lorsq'on tire dessus
+            if (hit.transform.gameObject.tag == "swat")
             {
-                
+                GameObject.Find(hit.transform.name).GetComponent<AiSwat>().SwatDead();
             }
         }
         // nous permet de faire sortir nos etincelles lors de l'impsct
