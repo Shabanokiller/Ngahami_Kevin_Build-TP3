@@ -877,7 +877,7 @@ GameObject:
   - component: {fileID: 376456202}
   m_Layer: 1
   m_Name: Cube (15)
-  m_TagString: Untagged
+  m_TagString: Mur
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -904,7 +904,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376456200}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -2010,7 +2010,7 @@ GameObject:
   - component: {fileID: 489272978}
   - component: {fileID: 489272977}
   - component: {fileID: 489272976}
-  m_Layer: 1
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2332,7 +2332,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 309
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3298,7 +3298,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 309
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -4279,7 +4279,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 309
+    m_Bits: 305
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -4890,7 +4890,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 309
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5417,7 +5417,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 309
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5627,7 +5627,7 @@ GameObject:
   - component: {fileID: 1646861096}
   - component: {fileID: 1646861095}
   - component: {fileID: 1646861094}
-  m_Layer: 1
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6171,7 +6171,7 @@ GameObject:
   - component: {fileID: 1751265203}
   m_Layer: 1
   m_Name: Cube (14)
-  m_TagString: Untagged
+  m_TagString: Mur
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -6198,7 +6198,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1751265201}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -11615,7 +11615,7 @@ GameObject:
   - component: {fileID: 2000771769}
   - component: {fileID: 2000771768}
   - component: {fileID: 2000771767}
-  m_Layer: 1
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11775,7 +11775,7 @@ GameObject:
   - component: {fileID: 2083294264}
   - component: {fileID: 2083294263}
   - component: {fileID: 2083294262}
-  m_Layer: 1
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11915,6 +11915,9 @@ MonoBehaviour:
   jumpHeight: 1
   Health: 100
   feetPosition: {fileID: 411313358}
+  playerGrimpe: 0
+  playerGrimpeMur: 0
+  speedGrimpe: 3
 --- !u!95 &2092823840
 Animator:
   serializedVersion: 3

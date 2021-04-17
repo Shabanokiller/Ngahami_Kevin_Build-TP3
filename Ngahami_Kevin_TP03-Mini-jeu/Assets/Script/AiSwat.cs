@@ -33,7 +33,7 @@ public class AiSwat : MonoBehaviour
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         pointDepart = transform.position;
-        pointDepartB = transform.FindChild("pointB").GetComponent<Transform>().transform.position;
+        pointDepartB = transform.Find("pointB").GetComponent<Transform>().transform.position;
         pointDepartA = transform.position;
     }
 
@@ -41,8 +41,8 @@ public class AiSwat : MonoBehaviour
     void Update()
     {
         // On repositionne nos points
-        transform.FindChild("pointB").GetComponent<Transform>().transform.position = pointDepartB;
-        transform.FindChild("pointA").GetComponent<Transform>().transform.position = pointDepartA;
+        transform.Find("pointB").GetComponent<Transform>().transform.position = pointDepartB;
+        transform.Find("pointA").GetComponent<Transform>().transform.position = pointDepartA;
 
         // On verifie qu'on est au point de depart
         if(transform.position.x == pointDepartA.x && transform.position.z == pointDepartA.z)

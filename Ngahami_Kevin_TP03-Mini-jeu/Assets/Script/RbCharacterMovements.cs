@@ -26,6 +26,10 @@ public class RbCharacterMovements : MonoBehaviour
     private bool isGrounded = true;
 
     private Animator animatorEly;
+    public bool playerGrimpe = false;
+    public bool playerGrimpeMur = false;
+    public float speedGrimpe = 3f;
+    CapsuleCollider playerCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -72,7 +76,25 @@ public class RbCharacterMovements : MonoBehaviour
             animatorEly.SetFloat("Vertical", inputVertical);
             animatorEly.SetFloat("Horizontal", inputHorizontal);
         }
-        // Grimper au mur 
+        // Grimper a l'echelle
+        if (!playerGrimpe)
+        {
+            moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+        }
+        else
+        {
+            transform.Translate(Vector3.up * speedGrimpe * Time.deltaTime);
+        }
+
+        //Grimper au mur
+        if (!playerGrimpeMur)
+        {
+            moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+        }
+        else
+        {
+            transform.Translate(Vector3.up * speedGrimpe * Time.deltaTime);
+        }
 
         //**** Animations de mouvements *****
         //animatorEly.SetFloat("Horizontal", inputHorizontal);
@@ -86,5 +108,57 @@ public class RbCharacterMovements : MonoBehaviour
     {
         // Déplacer le personnage selon le vecteur de direction
         rb.MovePosition(rb.position + moveDirection * speed * Time.fixedDeltaTime);
+    }
+
+    // Nous permet de decter si notre trigger est en collision avec notre joueur pour produire notre animataion
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "Ladder")
+        {
+            Debug.Log("OK");
+            playerGrimpe = true;
+            GetComponent<Rigidbody>().useGravity = false;
+            animatorEly.SetBool("Escalade", true);
+            //Debug.Log("OK");
+            //GetComponent<RbCharacterMovements>().enabled = false;
+            //Monter = true;
+        }
+
+        if (collider.gameObject.tag == "Mur")
+        {
+            Debug.Log("OK");
+            playerGrimpeMur = true;
+            GetComponent<Rigidbody>().useGravity = false;
+            animatorEly.SetBool("EscaladeMur", true);
+            //Debug.Log("OK");
+            //GetComponent<RbCharacterMovements>().enabled = false;
+            //Monter = true;
+        }
+    }
+
+    // Nous permet de decter si notre trigger n'est plus en collision avec notre joueur pour annuler notre animataion
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.gameObject.tag == "Ladder")
+        {
+            playerGrimpe = false;
+            GetComponent<Rigidbody>().useGravity = true;
+            animatorEly.SetBool("Escalade", false);
+            transform.Translate(Vector3.forward * 2);
+            //Debug.Log("OK");
+            //GetComponent<RbCharacterMovements>().enabled = false;
+            //Monter = true;
+        }
+
+        if (collider.gameObject.tag == "Mur")
+        {
+            playerGrimpeMur = false;
+            GetComponent<Rigidbody>().useGravity = true;
+            animatorEly.SetBool("EscaladeMur", false);
+            transform.Translate(Vector3.forward * 2);
+            //Debug.Log("OK");
+            //GetComponent<RbCharacterMovements>().enabled = false;
+            //Monter = true;
+        }
     }
 }
