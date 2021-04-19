@@ -21,6 +21,7 @@ TagManager:
   - Timer
   - Swat
   - Mur
+  - Medocs
   layers:
   - Default
   - TransparentFX

@@ -87,7 +87,7 @@ public class RbCharacterMovements : MonoBehaviour
         }
 
         //Grimper au mur
-        if (!playerGrimpeMur && Input.GetButton("k"))
+        if (!playerGrimpeMur && Input.GetKeyDown(KeyCode.K))
         {
             moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
         }

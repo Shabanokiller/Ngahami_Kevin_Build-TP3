@@ -47,7 +47,12 @@ public class WeaponManager : MonoBehaviour
             // Je fais un rayon a partir de BarrelEnd
             Ray bulletRay = new Ray(barrelEnd.position, barrelEnd.forward);
 
-            
+            // nous permet de faire sortir nos etincelles lors de l'impsct
+            if (Physics.Raycast(shootpoint.position, shootpoint.transform.forward, out hit, range))
+            {
+                GameObject hitParticules = Instantiate(hitParticule, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+                Destroy(hitParticules, 5f);
+            }
 
 
             // Si le rayon impacte sur un object, on le propulse
@@ -103,12 +108,7 @@ public class WeaponManager : MonoBehaviour
                 GameObject.Find(hit.transform.name).GetComponent<AiSwat>().SwatDead();
             }
         }
-        // nous permet de faire sortir nos etincelles lors de l'impsct
-        if (Physics.Raycast(shootpoint.position, shootpoint.transform.forward, out hit, range))
-        {
-            GameObject hitParticules = Instantiate(hitParticule, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-            Destroy(hitParticules, 5f);
-        }
+        
 
         if (!Input.GetKey(KeyCode.LeftShift))
         {
