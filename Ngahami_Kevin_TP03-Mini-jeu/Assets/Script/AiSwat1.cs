@@ -25,6 +25,7 @@ public class AiSwat1 : MonoBehaviour
     private bool patrouille = false;
     public float speedWalk = 1f;
     public float speedRun = 6f;
+    public GameObject muzzleFlash;
 
 
     // Start is called before the first frame update
@@ -35,6 +36,7 @@ public class AiSwat1 : MonoBehaviour
         pointDepart = transform.position;
         pointDepartA = transform.Find("pointA").GetComponent<Transform>().transform.position;
         pointDepartB = transform.position;
+        muzzleFlash.SetActive(false);
     }
 
     // Update is called once per frame
@@ -154,6 +156,7 @@ public class AiSwat1 : MonoBehaviour
                     GetComponent<AudioSource>().PlayOneShot(SoundFire);
                     GameObject bullet = Instantiate(projectil, eject.transform.position, Quaternion.identity) as GameObject;
                     bullet.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * force);
+                    muzzleFlash.SetActive(true);
                 }
             }
         }
@@ -169,5 +172,12 @@ public class AiSwat1 : MonoBehaviour
         GetComponent<Collider>().enabled = false;
         GetComponent<AudioSource>().PlayOneShot(SoundDead);
         anim.SetBool("Dead", true);
+    }
+
+    // Le delais d'attente pour notre muzzle flash
+    IEnumerator wait()
+    {
+        yield return new WaitForSeconds(0.05f);
+        muzzleFlash.SetActive(false);
     }
 }

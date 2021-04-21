@@ -7,11 +7,13 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     public Button btnJouer;
+    public Button btnInstructions;
 
     // Start is called before the first frame update
     void Start()
     {
         btnJouer.onClick.AddListener(btnJouer_Clicked);
+        btnInstructions.onClick.AddListener(btnInstructions_Clicked);
     }
 
     // Update is called once per frame
@@ -21,6 +23,13 @@ public class Menu : MonoBehaviour
     }
 
     void btnJouer_Clicked()
+    {
+        // Affiche la scene du jeu
+        SceneManager.LoadScene("Main");
+
+    }
+
+    void btnInstructions_Clicked()
     {
         // Affiche la scene du jeu
         SceneManager.LoadScene("Main");

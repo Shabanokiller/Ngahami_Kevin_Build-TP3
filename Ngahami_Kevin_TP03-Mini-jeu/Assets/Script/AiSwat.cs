@@ -6,10 +6,13 @@ using UnityEngine.AI;
 public class AiSwat : MonoBehaviour
 {
     public Transform target;
+    public float distance;
     public float lookAt = 30f;
+    public float ChasseRange = 10f;
     public int Degats = 10;
     public float fireAt = 20f;
     public float fireRate = 2f;
+    public float attackTime = 1f;
     public GameObject projectil;
     public GameObject eject;
     public AudioClip SoundFire;
@@ -25,6 +28,7 @@ public class AiSwat : MonoBehaviour
     private bool patrouille = false;
     public float speedWalk = 1f;
     public float speedRun = 6f;
+    public GameObject muzzleFlash;
 
 
     // Start is called before the first frame update
@@ -32,14 +36,18 @@ public class AiSwat : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        attackTime = Time.deltaTime;
         pointDepart = transform.position;
         pointDepartB = transform.Find("pointB").GetComponent<Transform>().transform.position;
         pointDepartA = transform.position;
+        muzzleFlash.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //distance = Vector3.Distance(target.position, transform.position);
+
         // On repositionne nos points
         transform.Find("pointB").GetComponent<Transform>().transform.position = pointDepartB;
         transform.Find("pointA").GetComponent<Transform>().transform.position = pointDepartA;
@@ -130,6 +138,7 @@ public class AiSwat : MonoBehaviour
         agent.updatePosition = true;
         agent.SetDestination(pointDepart);
 
+
         //rotation vers la cible
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), 20 * Time.deltaTime);
     }
@@ -154,6 +163,10 @@ public class AiSwat : MonoBehaviour
                     GetComponent<AudioSource>().PlayOneShot(SoundFire);
                     GameObject bullet = Instantiate(projectil, eject.transform.position, Quaternion.identity) as GameObject;
                     bullet.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * force);
+                    target.SendMessage("ApllicationDesDommages", Degats);
+                    Debug.Log("Ennemie a attaque");
+                    attackTime = Time.time + fireRate;
+                    muzzleFlash.SetActive(true);
                 }
             }
         }
@@ -169,5 +182,12 @@ public class AiSwat : MonoBehaviour
         GetComponent<Collider>().enabled = false;
         GetComponent<AudioSource>().PlayOneShot(SoundDead);
         anim.SetBool("Dead", true);
+    }
+
+    // Le delais d'attente pour notre muzzle flash
+    IEnumerator wait()
+    {
+        yield return new WaitForSeconds(0.05f);
+        muzzleFlash.SetActive(false);
     }
 }

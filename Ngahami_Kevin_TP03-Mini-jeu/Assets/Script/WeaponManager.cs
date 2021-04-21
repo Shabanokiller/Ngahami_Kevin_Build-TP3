@@ -7,6 +7,7 @@ public class WeaponManager : MonoBehaviour
     private int bulletLeft = 310;
     private int bulletPerMag = 31;
     private int currentBullets;
+    public float reloadTime = 3f;
     private float fireRate = 0.1f;
     private float range = 100f;
     float fireTimer;
@@ -20,6 +21,7 @@ public class WeaponManager : MonoBehaviour
     public GameObject hitParticule;
     public GameObject muzzleFlash;
     private RaycastHit hit;
+    bool isReloading = false;
 
 
     // Start is called before the first frame update
@@ -27,7 +29,7 @@ public class WeaponManager : MonoBehaviour
     {
         currentBullets = bulletPerMag;
         audioSource = GetComponent<AudioSource>();
-        hitParticule.SetActive(false);
+        //hitParticule.SetActive(false);
         muzzleFlash.SetActive(false);
 
     }
@@ -46,15 +48,6 @@ public class WeaponManager : MonoBehaviour
             }
             // Je fais un rayon a partir de BarrelEnd
             Ray bulletRay = new Ray(barrelEnd.position, barrelEnd.forward);
-
-            // nous permet de faire sortir nos etincelles lors de l'impsct
-            if (Physics.Raycast(shootpoint.position, shootpoint.transform.forward, out hit, range))
-            {
-                GameObject hitParticules = Instantiate(hitParticule, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-                Destroy(hitParticules, 5f);
-            }
-
-
             // Si le rayon impacte sur un object, on le propulse
             if (Physics.Raycast(bulletRay, out hit))
             {
@@ -81,7 +74,18 @@ public class WeaponManager : MonoBehaviour
     private void Fire()
     {
         if (fireTimer < fireRate || currentBullets <= 0)
+        {
             return;
+        }
+           
+        currentBullets--;
+        Debug.Log("Balles restantes : " + currentBullets);
+        if (currentBullets <= 0)
+        {
+            Reload();
+            return;
+        }
+
 
         RaycastHit hit;
 
@@ -108,7 +112,14 @@ public class WeaponManager : MonoBehaviour
                 GameObject.Find(hit.transform.name).GetComponent<AiSwat>().SwatDead();
             }
         }
-        
+
+        // nous permet de faire sortir nos etincelles lors de l'impsct
+        if (Physics.Raycast(shootpoint.position, shootpoint.transform.forward, out hit, range))
+        {
+            GameObject hitParticules = Instantiate(hitParticule, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+            Destroy(hitParticules, 5f);
+        }
+
 
         if (!Input.GetKey(KeyCode.LeftShift))
         {
@@ -135,5 +146,26 @@ public class WeaponManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.05f);
         muzzleFlash.SetActive(false);
+    }
+    // La fonction qui nous permet d'effectuer notre recharge d'arme
+    public void Reload() 
+    {
+        if(isReloading == true)
+        {
+            return;
+        }
+        StartCoroutine(Reload_Coroutine());
+    }
+    // Notre coroutine pour le rechargement de notre arme 
+    public IEnumerator Reload_Coroutine()
+    {
+
+        Debug.Log("Reloading....");
+        isReloading = true;
+        yield return new WaitForSeconds(reloadTime);
+        currentBullets = bulletPerMag;
+
+        isReloading = false;
+        Debug.Log("Finish Reloading...");
     }
 }
