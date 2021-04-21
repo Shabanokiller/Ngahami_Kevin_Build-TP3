@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RbCharacterMovements : MonoBehaviour
 {
@@ -15,7 +16,11 @@ public class RbCharacterMovements : MonoBehaviour
     private float speed = 0.1f;
     private float inputVertical;
     private float inputHorizontal;
-    public float speedBarreEnergieVide = 1f;
+    // Barre d'energie
+    public Image Stamina;
+    public float StaminaBar = 100f;
+    public float StaminaMax = 100f;
+    public float speedBarreEnergieVide = 0.1f;
     public float speedBarreEnergieRempli = 0.3f;
     private float speedBarreEnergie = 1f;
     private float deadzone = 0.1f;
@@ -43,15 +48,15 @@ public class RbCharacterMovements : MonoBehaviour
         //Assigner l'animator
         animatorEly = GetComponent<Animator>();
 
-
-        UI ui = GetComponent<UI>();
-        ui.SetController(GetComponent<RbCharacterMovements>());
+        StaminaBar = StaminaMax;
+        //UI ui = GetComponent<UI>();
+        //ui.SetController(GetComponent<RbCharacterMovements>());
         // Assigner le Spawn position
         //spawnPosition = transform.position;
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         // Vérifier si l'on touche le sol
         isGrounded = Physics.CheckSphere(feetPosition.position, 0.15f, 1, QueryTriggerInteraction.Ignore);
@@ -73,14 +78,27 @@ public class RbCharacterMovements : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftShift))
         {
             speed = runningspeed;
-            speedBarreEnergie -= speedBarreEnergieVide * Time.deltaTime;
-            animatorEly.SetFloat("Vertical", inputVertical * 2f);
-            animatorEly.SetFloat("Horizontal", inputHorizontal * 2f);
+            Stamina.fillAmount -= speedBarreEnergieVide * Time.deltaTime;
+            if (Stamina.fillAmount >= 0)
+            {
+                animatorEly.SetFloat("Vertical", inputVertical * 2f);
+                animatorEly.SetFloat("Horizontal", inputHorizontal * 2f);
+            }
+
+            if (Stamina.fillAmount <= 0)
+            {
+                speed = walkinggspeed;
+                animatorEly.SetFloat("Vertical", inputVertical);
+                animatorEly.SetFloat("Horizontal", inputHorizontal);
+            }
+            //speedBarreEnergie -= speedBarreEnergieVide * Time.deltaTime;
+            
         }
         else
         {
             speed = walkinggspeed;
-            speedBarreEnergie += speedBarreEnergieRempli * Time.deltaTime;
+            Stamina.fillAmount += speedBarreEnergieRempli * Time.deltaTime;
+            //speedBarreEnergie += speedBarreEnergieRempli * Time.deltaTime;
             animatorEly.SetFloat("Vertical", inputVertical);
             animatorEly.SetFloat("Horizontal", inputHorizontal);
         }

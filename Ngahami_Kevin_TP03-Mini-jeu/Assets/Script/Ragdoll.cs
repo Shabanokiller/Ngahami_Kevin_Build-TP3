@@ -31,7 +31,7 @@ public class Ragdoll : MonoBehaviour
         // Desactiver l'animator
         animator.enabled = false;
         die = true;
-        //GetComponent<Zombie>().Dead();
+        GetComponent<AiSwat>().SwatDead();
         //Activer le ragdoll
         ToggleRbs(false);
     }

@@ -8,11 +8,12 @@ public class RamasserMedocs : MonoBehaviour
     public int TotalMedocs = 2;
     public AudioClip audioClip;
     private AudioSource audioSource;
+    private PlayerStat playerStat;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        playerStat = GameObject.Find("ely_k_atienza").GetComponent<PlayerStat>();
     }
 
     // fonction pour jouer le son de mort 
@@ -33,6 +34,7 @@ public class RamasserMedocs : MonoBehaviour
             TotalMedocs -= 1;
             //txtInfos.enabled = true;
             GetComponent<AudioSource>().PlayOneShot(audioClip);
+            playerStat.healthBar = 100;
             Debug.Log("Vous avez fait le plein de votre barre de vie");
         }
     }

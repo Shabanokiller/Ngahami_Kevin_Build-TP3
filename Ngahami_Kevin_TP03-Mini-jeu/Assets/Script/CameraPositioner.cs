@@ -42,7 +42,7 @@ public class CameraPositioner : MonoBehaviour
         RepositionCamera();
     }
 
-    void RotateCamPosition()
+    public void RotateCamPosition()
     {
         // Positions X et Y du curseur
         float mouseX = Input.GetAxis("Mouse X");

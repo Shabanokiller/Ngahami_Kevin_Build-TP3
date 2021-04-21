@@ -5,11 +5,12 @@ using UnityEngine.AI;
 
 public class AiSwat : MonoBehaviour
 {
+    //public PlayerStat playerStat;
     public Transform target;
     public float distance;
     public float lookAt = 30f;
     public float ChasseRange = 10f;
-    public int Degats = 10;
+    public int degats = 10;
     public float fireAt = 20f;
     public float fireRate = 2f;
     public float attackTime = 1f;
@@ -29,6 +30,7 @@ public class AiSwat : MonoBehaviour
     public float speedWalk = 1f;
     public float speedRun = 6f;
     public GameObject muzzleFlash;
+    private PlayerStat playerStat;
 
 
     // Start is called before the first frame update
@@ -41,6 +43,7 @@ public class AiSwat : MonoBehaviour
         pointDepartB = transform.Find("pointB").GetComponent<Transform>().transform.position;
         pointDepartA = transform.position;
         muzzleFlash.SetActive(false);
+        playerStat = GameObject.Find("ely_k_atienza").GetComponent<PlayerStat>();
     }
 
     // Update is called once per frame
@@ -163,8 +166,10 @@ public class AiSwat : MonoBehaviour
                     GetComponent<AudioSource>().PlayOneShot(SoundFire);
                     GameObject bullet = Instantiate(projectil, eject.transform.position, Quaternion.identity) as GameObject;
                     bullet.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * force);
-                    target.SendMessage("ApllicationDesDommages", Degats);
-                    Debug.Log("Ennemie a attaque");
+                    //GetComponent<PlayerStat>().Dommage(degats);
+                    //target.SendMessage("Dommage", degats);
+                    //Debug.Log("Ennemie a attaque");
+                    //GetComponent<PlayerStat>().Dommage(degats);
                     attackTime = Time.time + fireRate;
                     muzzleFlash.SetActive(true);
                 }
@@ -178,9 +183,10 @@ public class AiSwat : MonoBehaviour
         // on le tue
         SwatIsdead = true;
         // On fait en sorte qui n'avance plus et on desactive l'animation
-        agent.speed = 0;
-        GetComponent<Collider>().enabled = false;
-        GetComponent<AudioSource>().PlayOneShot(SoundDead);
+        agent.isStopped = true;
+        //agent.speed = 0;
+        //GetComponent<Collider>().enabled = false;
+        //GetComponent<AudioSource>().PlayOneShot(SoundDead);
         anim.SetBool("Dead", true);
     }
 
