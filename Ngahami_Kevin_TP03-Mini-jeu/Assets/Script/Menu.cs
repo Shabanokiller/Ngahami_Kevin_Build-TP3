@@ -8,6 +8,8 @@ public class Menu : MonoBehaviour
 {
     public Button btnJouer;
     public Button btnInstructions;
+    public GameObject Panel;
+    private bool visible = false;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +34,8 @@ public class Menu : MonoBehaviour
     void btnInstructions_Clicked()
     {
         // Affiche la scene du jeu
-        SceneManager.LoadScene("Main");
+        visible = !visible;
+        Panel.SetActive(visible);
 
     }
 }

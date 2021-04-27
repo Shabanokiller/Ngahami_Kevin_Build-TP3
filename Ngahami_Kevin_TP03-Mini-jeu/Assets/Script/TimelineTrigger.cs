@@ -7,13 +7,13 @@ public class TimelineTrigger : MonoBehaviour
 {
     RbCharacterMovements rb;
     public PlayableDirector playableDirector;
-    private CameraPositioner cameraposition;
+    //private CameraPositioner cameraposition;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GameObject.Find("ely_k_atienza").GetComponent<RbCharacterMovements>();
-        cameraposition = GameObject.Find("ely_k_atienza").GetComponent<CameraPositioner>();
+        //cameraposition = GameObject.Find("ely_k_atienza").GetComponent<CameraPositioner>();
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class TimelineTrigger : MonoBehaviour
         if(other.gameObject.CompareTag("Player"))
         {
             rb.enabled = false;
-            cameraposition.enabled = false;
+            //cameraposition.enabled = false;
             Play();
 
         }

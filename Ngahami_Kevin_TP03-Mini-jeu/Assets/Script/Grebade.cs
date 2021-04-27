@@ -17,6 +17,7 @@ public class Grebade : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Nous permet de verifier le nombre de grenade qu'on a en stock
         if(playerStat.grenades >= 1)
         {
             if (Input.GetKeyDown(KeyCode.G))
