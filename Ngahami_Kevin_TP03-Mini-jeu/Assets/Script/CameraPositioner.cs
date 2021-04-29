@@ -15,7 +15,7 @@ public class CameraPositioner : MonoBehaviour
     float xAxisClamp = 0f;    
 
     // Le transform de la caméra
-    Transform mainCamTransform;
+    public Transform mainCamTransform;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +26,7 @@ public class CameraPositioner : MonoBehaviour
         // Le transform du joueur
         playerTransform = transform.parent;
 
-        mainCamTransform = Camera.main.transform;
+        //mainCamTransform = Camera.main.transform;
         mainCamTransform.parent = null;
     }
 
