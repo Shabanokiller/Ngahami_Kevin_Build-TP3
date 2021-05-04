@@ -20,7 +20,7 @@ public class RbCharacterMovements : MonoBehaviour
     public Image Stamina;
     public float StaminaBar = 100f;
     public float StaminaMax = 100f;
-    public float speedBarreEnergieVide = 0.1f;
+    public float speedBarreEnergieVide = 30f;
     public float speedBarreEnergieRempli = 0.3f;
     private float speedBarreEnergie = 1f;
     private float deadzone = 0.1f;

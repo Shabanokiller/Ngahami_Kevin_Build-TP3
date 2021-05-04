@@ -18,6 +18,7 @@ public class WeaponManager : MonoBehaviour
     private AudioSource _audioSource;
     public AudioClip shootSound;
     public AudioClip deadSound;
+    public AudioClip emptySound;
     public GameObject hitParticule;
     public GameObject muzzleFlash;
     private RaycastHit hit;
@@ -107,7 +108,7 @@ public class WeaponManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Camera.main.farClipPlane))
         {
             // nous permet de tuer notre ennemie lorsq'on tire dessus
-            if (hit.transform.gameObject.tag == "swat")
+            if (hit.transform.gameObject.tag == "Swat")
             {
                 GameObject.Find(hit.transform.name).GetComponent<AiSwat>().SwatDead();
             }
@@ -162,10 +163,16 @@ public class WeaponManager : MonoBehaviour
 
         Debug.Log("Reloading....");
         isReloading = true;
+        PlayEmptySound();
         yield return new WaitForSeconds(reloadTime);
         currentBullets = bulletPerMag;
 
         isReloading = false;
         Debug.Log("Finish Reloading...");
+    }
+    // fonction pour jouer le son de chargeur vide 
+    private void PlayEmptySound()
+    {
+        audioSource.PlayOneShot(emptySound);
     }
 }

@@ -51,7 +51,11 @@ public class Grenade : MonoBehaviour
             // Les dommages
             Destruction destruction = col.GetComponent<Destruction>();
             if (destruction != null)
+            {
                 destruction.Destroy();
+                PlayExplosionSound();
+            }
+                
         }
 
         // On retire la grenade 
@@ -61,7 +65,7 @@ public class Grenade : MonoBehaviour
     // Ce qui nous permet d'infliger des degats a nos ennemies 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("swat"))
+        if (other.gameObject.CompareTag("Swat"))
         {
             other.gameObject.GetComponent<SwatHealth>().swatHealth -= 50;
             PlayExplosionSound();
