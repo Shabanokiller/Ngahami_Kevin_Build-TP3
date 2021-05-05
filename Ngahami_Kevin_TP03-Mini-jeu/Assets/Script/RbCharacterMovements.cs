@@ -141,13 +141,13 @@ public class RbCharacterMovements : MonoBehaviour
         rb.MovePosition(rb.position + moveDirection * speed * Time.fixedDeltaTime);
     }
 
-    // Nous permet de decter si notre trigger est en collision avec notre joueur pour produire notre animataion
+    // Nous permet de detecter si notre trigger est en collision avec notre joueur pour produire notre animataion
     private void OnTriggerEnter(Collider collider)
     {
 
         if (collider.gameObject.tag == "Mur")
         {
-            Debug.Log("OK");
+            //Debug.Log("OK");
             playerGrimpeMur = true;
             GetComponent<Rigidbody>().useGravity = false;
             animatorEly.SetBool("EscaladeMur", true);
@@ -166,6 +166,11 @@ public class RbCharacterMovements : MonoBehaviour
             transform.Translate(Vector3.forward * 2);
         }
     }
+
+    //private void OnTriggerStay(Collider other)
+    //{
+        
+    //}
 
     public float GetspeedBarreEnergie()
     {

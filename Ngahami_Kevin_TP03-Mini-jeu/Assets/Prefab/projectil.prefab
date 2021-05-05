@@ -127,6 +127,7 @@ MonoBehaviour:
   playerHealth: 100
   degats: 10
   audio: {fileID: 8300000, guid: 4fec5a6fd4fb26345aceb91b4fdf375b, type: 3}
+  muzzleFlash: {fileID: 0}
 --- !u!82 &-4920234141155085430
 AudioSource:
   m_ObjectHideFlags: 0

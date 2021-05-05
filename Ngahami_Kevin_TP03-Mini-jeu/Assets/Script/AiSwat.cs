@@ -11,7 +11,7 @@ public class AiSwat : MonoBehaviour
     public float lookAt = 30f;
     public float ChasseRange = 10f;
     public int degats = 10;
-    public float fireAt = 20f;
+    public float fireAt = 9f;
     public float fireRate = 2f;
     public float attackTime = 1f;
     public GameObject projectil;
@@ -103,7 +103,7 @@ public class AiSwat : MonoBehaviour
     void SwatRun()
     {
         //animation courir du swat
-        agent.stoppingDistance = 3f;
+        agent.stoppingDistance = 10f;
         agent.speed = speedRun;
         if (agent.velocity.magnitude > 0.1)
         {
