@@ -14,6 +14,9 @@ public class PlayerStat : MonoBehaviour
     public Image health;
     private Animator animatorEly;
     RbCharacterMovements rbCharacter;
+    public GameObject GameOver;
+    private bool visible = false;
+    private bool end = false;
     //private CameraPositioner cameraposition;
 
 
@@ -46,6 +49,12 @@ public class PlayerStat : MonoBehaviour
         health.fillAmount = healthBar / healthMax;
 
         // Nous permet de diminuer progressivement notre image a l'ecran dependament de l'interval
+        if(healthBar == 0)
+        {
+            GameOver.SetActive(true);
+            Time.timeScale = 0f;
+            end = true;
+        }
         if (healthBar >= 1 && healthBar < 20)
         {
             Ui.GetComponent<CanvasGroup>().alpha = 1;
@@ -81,18 +90,30 @@ public class PlayerStat : MonoBehaviour
         {
             tempsDeRegeneration = 0;
         }
+        //EndGame();
     }
 
     // Nous permet d'appliquer les dommages a notre joueur
     public void Dommage(int degats)
     {
         healthBar -= degats;
-        tempsDeRegeneration += 5;
+        tempsDeRegeneration += 2;
 
         if(healthBar <= 0)
         {
             Dead();
+            //visible = !visible;
+            //Panel.SetActive(visible);
+            //EndGame();
         }
+    }
+
+    public void EndGame()
+    {
+        GameOver.SetActive(true);
+        Time.timeScale = 0f;
+        end = true;
+        ///pause = !pause;
     }
 
     public void Dead()

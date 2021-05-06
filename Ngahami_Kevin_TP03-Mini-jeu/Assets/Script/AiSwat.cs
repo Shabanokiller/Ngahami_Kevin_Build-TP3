@@ -8,10 +8,10 @@ public class AiSwat : MonoBehaviour
     //public PlayerStat playerStat;
     public Transform target;
     public float distance;
-    public float lookAt = 30f;
+    public float lookAt = 5f;
     public float ChasseRange = 10f;
     public int degats = 10;
-    public float fireAt = 9f;
+    public float fireAt = 5f;
     public float fireRate = 2f;
     public float attackTime = 1f;
     public GameObject projectil;

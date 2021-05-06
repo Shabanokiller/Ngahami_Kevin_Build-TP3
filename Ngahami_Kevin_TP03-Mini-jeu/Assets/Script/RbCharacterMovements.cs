@@ -105,6 +105,24 @@ public class RbCharacterMovements : MonoBehaviour
         // Nous permet de delimiter notre barre d'energie
         speedBarreEnergie = Mathf.Clamp(speedBarreEnergie, 0f, 1f);
 
+        // Cacher
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            animatorEly.SetBool("Cacher", true);
+            //rb.AddForce(Vector3.up * Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+        }
+        else
+        {
+            moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+            //animatorEly.SetBool("Cacher", false);
+            // *** Vérifier les inputs du joueur ***
+            // Vertical (W, S et Joystick avant/arrière)
+            //inputVertical = Input.GetAxis("Vertical");
+            //// Horizontal (A, D et Joystick gauche/droite)
+            //inputHorizontal = Input.GetAxis("Horizontal");
+            //moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+        }
+
         // Grimper a l'echelle
         //if (!playerGrimpe)
         //{
@@ -167,10 +185,16 @@ public class RbCharacterMovements : MonoBehaviour
         }
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-        
-    //}
+    private void OnTriggerStay(Collider collider)
+    {
+        if (collider.gameObject.tag == "Mur")
+        {
+            //Debug.Log("OK");
+            playerGrimpeMur = true;
+            GetComponent<Rigidbody>().useGravity = false;
+            animatorEly.SetBool("EscaladeMur", true);
+        }
+    }
 
     public float GetspeedBarreEnergie()
     {
