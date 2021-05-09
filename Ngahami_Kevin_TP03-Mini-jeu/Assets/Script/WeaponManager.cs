@@ -23,6 +23,7 @@ public class WeaponManager : MonoBehaviour
     public GameObject muzzleFlash;
     private RaycastHit hit;
     bool isReloading = false;
+    private Animator animatorEly;
 
 
     // Start is called before the first frame update
@@ -32,7 +33,7 @@ public class WeaponManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         //hitParticule.SetActive(false);
         muzzleFlash.SetActive(false);
-
+        animatorEly = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -42,7 +43,7 @@ public class WeaponManager : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
 
-
+            //animatorEly.SetBool("Shoot", true);
             if(currentBullets > 0)
             {
                 Fire();

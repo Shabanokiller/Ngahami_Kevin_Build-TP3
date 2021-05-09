@@ -7,6 +7,7 @@ public class Options : MonoBehaviour
     public GameObject Panel;
     private bool visible = false;
     private bool pause = false;
+
     //public GameObject pauseMenu;
     // Start is called before the first frame update
     void Start()
@@ -51,4 +52,12 @@ public class Options : MonoBehaviour
         pause = false;
         ///pause = !pause;
     }
+
+    //public void EndGame()
+    //{
+    //    GameOver.SetActive(true);
+    //    Time.timeScale = 0f;
+    //    end = true;
+    //    ///pause = !pause;
+    //}
 }

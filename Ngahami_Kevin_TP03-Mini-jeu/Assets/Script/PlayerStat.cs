@@ -42,6 +42,8 @@ public class PlayerStat : MonoBehaviour
         //cameraposition = GameObject.Find("ely_k_atienza").GetComponent<CameraPositioner>();
 
         healthBar = healthMax;
+
+        //options = GameObject.Find("ely_k_atienza").GetComponent<Options>();
     }
 
     private void Update()
@@ -49,12 +51,13 @@ public class PlayerStat : MonoBehaviour
         health.fillAmount = healthBar / healthMax;
 
         // Nous permet de diminuer progressivement notre image a l'ecran dependament de l'interval
-        if(healthBar == 0)
-        {
-            GameOver.SetActive(true);
-            Time.timeScale = 0f;
-            end = true;
-        }
+        //if(healthBar == 0)
+        //{
+        //    visible = !visible;
+        //    GameOver.SetActive(true);
+        //    Time.timeScale = 0f;
+        //    end = true;
+        //}
         if (healthBar >= 1 && healthBar < 20)
         {
             Ui.GetComponent<CanvasGroup>().alpha = 1;
@@ -102,15 +105,13 @@ public class PlayerStat : MonoBehaviour
         if(healthBar <= 0)
         {
             Dead();
-            //visible = !visible;
-            //Panel.SetActive(visible);
-            //EndGame();
+            //options.EndGame();
         }
     }
 
     public void EndGame()
     {
-        GameOver.SetActive(true);
+        //GameOver.SetActive(true);
         Time.timeScale = 0f;
         end = true;
         ///pause = !pause;
@@ -124,6 +125,9 @@ public class PlayerStat : MonoBehaviour
         rbCharacter.enabled = false;
         //cameraposition.enabled = false;
         animatorEly.SetBool("Dead", true);
+        visible = !visible;
+        GameOver.SetActive(visible);
+        EndGame();
     }
 
     // On ajoute +1 a chque fois a healthbar
