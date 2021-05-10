@@ -126,7 +126,7 @@ public class PlayerStat : MonoBehaviour
         //cameraposition.enabled = false;
         animatorEly.SetBool("Dead", true);
         visible = !visible;
-        GameOver.SetActive(visible);
+        GameOver.SetActive(true);
         EndGame();
     }
 

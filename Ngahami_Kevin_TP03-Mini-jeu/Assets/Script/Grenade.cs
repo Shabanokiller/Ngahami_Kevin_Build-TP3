@@ -12,9 +12,11 @@ public class Grenade : MonoBehaviour
     bool hasExploded = false;
     public new AudioClip audio;
     private AudioSource audioSource;
+    AiSwat swat;
     // Start is called before the first frame update
     void Start()
     {
+        swat = GameObject.Find("swat").GetComponent<AiSwat>();
         countdown = delais;
     }
 
@@ -63,17 +65,34 @@ public class Grenade : MonoBehaviour
     }
 
     // Ce qui nous permet d'infliger des degats a nos ennemies 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Swat"))
-        {
-            other.gameObject.GetComponent<SwatHealth>().swatHealth -= 50;
-            PlayExplosionSound();
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Swat"))
+    //    {
+    //        //GameObject.Find(hit.transform.name).GetComponent<AiSwat>().SwatDead();
+    //        //other.gameObject.GetComponent<SwatHealth>().sw
+    //        swat.SwatDead();
+    //        PlayExplosionSound();
+    //    }
+    //}
 
     private void PlayExplosionSound()
     {
         audioSource.PlayOneShot(audio);
+    }
+
+    // Ce qui nous permet d'infliger des degats a nos ennemies 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Swat")
+        {
+
+            //Debug.Log("player touche");
+            swat.SwatDead();
+            //playerStat.Dead();
+            //GetComponent<PlayerStat>().Dommage(degats);
+            PlayExplosionSound();
+            //GameObject.Find("ely_k_atienza").GetComponent<HealthBar>().currentHP -= GameObject.Find("swat").GetComponent<AiSwat>().Degats;
+        }
     }
 }

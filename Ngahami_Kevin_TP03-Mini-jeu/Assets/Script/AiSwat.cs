@@ -154,6 +154,23 @@ public class AiSwat : MonoBehaviour
         // On verifie qu'il n'est pas mort et ensuite il effectue son tir
         if (Time.time > nextFire && !SwatIsdead)
         {
+            //RaycastHit hit;
+            //if (Physics.Raycast(transform.FindChild("Player").transform.position, transform.FindChild("Player").TransformDirection(Vector3.forward), out hit))
+            //{
+            //    if (hit.transform.name == target.transform.name)
+            //    {
+            //        GetComponent<AudioSource>().PlayOneShot(SoundFire);
+            //        GameObject bullet = Instantiate(projectil, transform.FindChild("Player").transform.position, Quaternion.identity) as GameObject;
+            //        bullet.GetComponent<Rigidbody>().velocity = transform.forward * force;
+            //        Destroy(bullet, 3f);
+            //        //bullet.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * force);
+            //        //GetComponent<PlayerStat>().Dommage(degats);
+            //        //target.SendMessage("Dommage", degats);
+            //        //Debug.Log("Ennemie a attaque");
+            //        //GetComponent<PlayerStat>().Dommage(degats);
+            //        attackTime = Time.time + fireRate;
+            //    }
+            //}
             nextFire = Time.time + fireRate;
 
             RaycastHit hit;

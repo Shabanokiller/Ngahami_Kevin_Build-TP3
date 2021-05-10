@@ -12,7 +12,12 @@ public class Menu : MonoBehaviour
     public Button btnExit;
     public GameObject Panel;
     public GameObject instrut;
+    public GameObject loadScreen;
+    public Slider slider;
+    public Text text;
+    int sceneIndex;
     private bool visible = false;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +36,8 @@ public class Menu : MonoBehaviour
 
     void btnJouer_Clicked()
     {
+
+        LoadLevel(sceneIndex);
         // Affiche la scene du jeu
         SceneManager.LoadScene("Main");
 
@@ -60,5 +67,26 @@ public class Menu : MonoBehaviour
         instrut.SetActive(!visible);
         Panel.SetActive(!visible);
 
+    }
+
+    void LoadLevel(int sceneIndex)
+    {
+        //AsyncOperation async = SceneManager.LoadSceneAsync(sceneIndex);
+        //async.
+        StartCoroutine(Async(sceneIndex));
+    }
+
+    IEnumerator Async(int sceneIndex)
+    {
+        AsyncOperation async = SceneManager.LoadSceneAsync(sceneIndex);
+        loadScreen.SetActive(true);
+
+        while (!async.isDone)
+        {
+            float progress = Mathf.Clamp01(async.progress / 0.9f);
+            slider.value = progress;
+            text.text = progress * 100 + "%";
+            yield return null;
+        }
     }
 }
