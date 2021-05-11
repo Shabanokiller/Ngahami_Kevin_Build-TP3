@@ -24,6 +24,7 @@ public class RbCharacterMovements : MonoBehaviour
     public float speedBarreEnergieRempli = 0.3f;
     private float speedBarreEnergie = 1f;
     private float deadzone = 0.1f;
+    WeaponManager weaponManager;
 
     private Vector3 moveDirection;
 
@@ -47,6 +48,8 @@ public class RbCharacterMovements : MonoBehaviour
 
         //Assigner l'animator
         animatorEly = GetComponent<Animator>();
+
+        weaponManager = FindObjectOfType<WeaponManager>();
 
         StaminaBar = StaminaMax;
         //UI ui = GetComponent<UI>();
@@ -78,7 +81,7 @@ public class RbCharacterMovements : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftShift))
         {
             speed = runningspeed;
-            Stamina.fillAmount -= speedBarreEnergieVide * Time.deltaTime;
+            Stamina.fillAmount -= 0.05f * Time.deltaTime;
             if (Stamina.fillAmount >= 0)
             {
                 animatorEly.SetFloat("Vertical", inputVertical * 2f);
@@ -123,6 +126,10 @@ public class RbCharacterMovements : MonoBehaviour
             //moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
         }
 
+        //if (weaponManager.Fire() == true)
+        //{
+
+        //}
         // Grimper a l'echelle
         //if (!playerGrimpe)
         //{
@@ -133,17 +140,17 @@ public class RbCharacterMovements : MonoBehaviour
         //    transform.Translate(Vector3.up * speedGrimpe * Time.deltaTime);
         //}
 
-        ////Grimper au mur
-        //if (!playerGrimpeMur && Input.GetKeyDown(KeyCode.K))
-        //{
-        //    animatorEly.SetBool("EscaladeMur", true);
-        //    //transform.Translate(Vector3.up * speedGrimpe * Time.deltaTime);
-        //}
-        //else
-        //{
-        //    animatorEly.SetBool("EscaladeMur", false);
-        //    //moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
-        //}
+        //Grimper au mur
+        if (!playerGrimpeMur && Input.GetKey(KeyCode.K))
+        {
+            animatorEly.SetBool("EscaladeMur", true);
+            //transform.Translate(Vector3.up * speedGrimpe * Time.deltaTime);
+        }
+        else
+        {
+            animatorEly.SetBool("EscaladeMur", false);
+            //moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+        }
 
         //**** Animations de mouvements *****
         //animatorEly.SetFloat("Horizontal", inputHorizontal);
@@ -199,5 +206,18 @@ public class RbCharacterMovements : MonoBehaviour
     public float GetspeedBarreEnergie()
     {
         return speedBarreEnergie;
+    }
+
+
+    public void Feu()
+    {
+        animatorEly.SetBool("Shoot", true);
+        transform.Translate(Vector3.up * Time.deltaTime);
+    }
+
+    public void AnnulerFeu()
+    {
+        animatorEly.SetBool("Shoot", false);
+        moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
     }
 }

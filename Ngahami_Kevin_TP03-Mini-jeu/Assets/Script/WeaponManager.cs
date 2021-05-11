@@ -24,6 +24,8 @@ public class WeaponManager : MonoBehaviour
     private RaycastHit hit;
     bool isReloading = false;
     private Animator animatorEly;
+    WeaponManager weaponManager;
+    RbCharacterMovements rb;
 
 
     // Start is called before the first frame update
@@ -34,6 +36,8 @@ public class WeaponManager : MonoBehaviour
         //hitParticule.SetActive(false);
         muzzleFlash.SetActive(false);
         animatorEly = GetComponent<Animator>();
+        weaponManager = FindObjectOfType<WeaponManager>();
+        rb = FindObjectOfType<RbCharacterMovements>();
     }
 
     // Update is called once per frame
@@ -42,12 +46,15 @@ public class WeaponManager : MonoBehaviour
         //Pour effectuer un tir
         if (Input.GetButtonDown("Fire1"))
         {
-
             //animatorEly.SetBool("Shoot", true);
             if(currentBullets > 0)
             {
+                //rb.Feu();
                 Fire();
             }
+            //else {
+            //    rb.AnnulerFeu();
+            //}
             // Je fais un rayon a partir de BarrelEnd
             Ray bulletRay = new Ray(barrelEnd.position, barrelEnd.forward);
             // Si le rayon impacte sur un object, on le propulse
@@ -64,6 +71,10 @@ public class WeaponManager : MonoBehaviour
             }
             
         }
+        else
+        {
+            rb.AnnulerFeu();
+        }
 
         if(fireTimer < fireRate)
         {
@@ -73,8 +84,10 @@ public class WeaponManager : MonoBehaviour
         
     }
     // fonction pour effectuer un tir 
-    private void Fire()
+    public void Fire()
     {
+        //animatorEly.SetBool("Shoot", true);
+        rb.Feu();
         if (fireTimer < fireRate || currentBullets <= 0)
         {
             return;
@@ -165,11 +178,13 @@ public class WeaponManager : MonoBehaviour
         Debug.Log("Reloading....");
         isReloading = true;
         PlayEmptySound();
+        weaponManager.enabled = false;
         yield return new WaitForSeconds(reloadTime);
         currentBullets = bulletPerMag;
 
         isReloading = false;
         Debug.Log("Finish Reloading...");
+        weaponManager.enabled = true;
     }
     // fonction pour jouer le son de chargeur vide 
     private void PlayEmptySound()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerStat : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PlayerStat : MonoBehaviour
     private Animator animatorEly;
     RbCharacterMovements rbCharacter;
     public GameObject GameOver;
+    //public GameObject Mort;
     private bool visible = false;
     private bool end = false;
     //private CameraPositioner cameraposition;
@@ -105,6 +107,7 @@ public class PlayerStat : MonoBehaviour
         if(healthBar <= 0)
         {
             Dead();
+            SceneManager.LoadScene(2);
             //options.EndGame();
         }
     }
@@ -126,8 +129,9 @@ public class PlayerStat : MonoBehaviour
         //cameraposition.enabled = false;
         animatorEly.SetBool("Dead", true);
         visible = !visible;
-        GameOver.SetActive(true);
-        EndGame();
+        //Mort.SetActive(true);
+        /*GameOver.SetActive(true);*/
+        //EndGame();
     }
 
     // On ajoute +1 a chque fois a healthbar

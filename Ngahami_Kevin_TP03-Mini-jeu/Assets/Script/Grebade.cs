@@ -6,7 +6,9 @@ public class Grebade : MonoBehaviour
 {
     private PlayerStat playerStat;
     public Rigidbody grenade;
-    public int speed = 10;
+    public GameObject game;
+    public Transform transform;
+    public float force = 800;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +26,8 @@ public class Grebade : MonoBehaviour
             {
                 Rigidbody grean;
                 grean = Instantiate(grenade, transform.position, transform.rotation);
-                grean.velocity = transform.TransformDirection(Vector3.forward * speed);
+                //grean.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * force);
+                grean.velocity = transform.TransformDirection(Vector3.forward * force);
                 playerStat.grenades -= 1;
             }
         }

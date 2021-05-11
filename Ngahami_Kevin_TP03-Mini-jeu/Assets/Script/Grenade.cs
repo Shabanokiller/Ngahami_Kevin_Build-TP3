@@ -7,7 +7,8 @@ public class Grenade : MonoBehaviour
     public float delais = 3f;
     public GameObject effectExplosion;
     public float radius = 5f;
-    public float force = 500f;
+    public float force = 10.0f;
+    public float explose = 90f;
     float countdown;
     bool hasExploded = false;
     public new AudioClip audio;
@@ -34,13 +35,13 @@ public class Grenade : MonoBehaviour
     // Fonction nous permettant de faire exploser nos bombes 
     void Explode()
     {
-        //On affiche les particules
-        Instantiate(effectExplosion, transform.position, transform.rotation);
+        
         //PlayExplosionSound();
 
-
+        //On verifie si on est en contact avec un colliders
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
+        //On applique la force
         foreach (Collider col in colliders)
         {
 
@@ -48,7 +49,7 @@ public class Grenade : MonoBehaviour
             Rigidbody rb = col.GetComponent<Rigidbody>();
             if(rb != null)
             {
-                rb.AddExplosionForce(force, transform.position, radius);
+                rb.AddExplosionForce(force, transform.position, radius, explose);
             }
             // Les dommages
             Destruction destruction = col.GetComponent<Destruction>();
@@ -60,6 +61,8 @@ public class Grenade : MonoBehaviour
                 
         }
 
+        //On affiche les particules
+        Instantiate(effectExplosion, transform.position, transform.rotation);
         // On retire la grenade 
         Destroy(gameObject);
     }
