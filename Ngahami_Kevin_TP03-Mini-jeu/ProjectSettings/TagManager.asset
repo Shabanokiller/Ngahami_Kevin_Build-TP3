@@ -23,6 +23,7 @@ TagManager:
   - Mur
   - Medocs
   - Bullet
+  - Boss
   layers:
   - Default
   - TransparentFX

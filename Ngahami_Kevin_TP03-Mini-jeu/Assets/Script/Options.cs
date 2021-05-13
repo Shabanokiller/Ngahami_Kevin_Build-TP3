@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Options : MonoBehaviour
 {
@@ -9,27 +10,29 @@ public class Options : MonoBehaviour
     private bool pause = false;
     private bool actif = false;
     RbCharacterMovements rb;
+    CameraPositioner positioner;
 
     //public GameObject pauseMenu;
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         rb = FindObjectOfType<RbCharacterMovements>();
+        positioner = FindObjectOfType<CameraPositioner>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(actif == true)
-        {
-            Panel.SetActive(true);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
-            //Time.timeScale = 0;
-        }
+        //if(actif == true)
+        //{
+        //    Panel.SetActive(true);
+        //    Cursor.visible = true;
+        //    Cursor.lockState = CursorLockMode.Confined;
+        //    //Time.timeScale = 0;
+        //}
 
-
+        // Nous permet d'activer le menu options
         if (Input.GetKeyDown(KeyCode.P))
         {
             if (pause)
@@ -38,6 +41,7 @@ public class Options : MonoBehaviour
                 Panel.SetActive(visible);
                 Resume();
                 rb.enabled = true;
+                positioner.enabled = true;
             }
             else
             {
@@ -45,6 +49,7 @@ public class Options : MonoBehaviour
                 Panel.SetActive(visible);
                 Pause();
                 rb.enabled = false;
+                positioner.enabled = false;
             }
             
         }
@@ -74,4 +79,8 @@ public class Options : MonoBehaviour
     //    end = true;
     //    ///pause = !pause;
     //}
+    private bool MouseOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
+    }
 }

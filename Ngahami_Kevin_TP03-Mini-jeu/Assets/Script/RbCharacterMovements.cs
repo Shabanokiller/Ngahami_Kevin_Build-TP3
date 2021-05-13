@@ -52,6 +52,14 @@ public class RbCharacterMovements : MonoBehaviour
         weaponManager = FindObjectOfType<WeaponManager>();
 
         StaminaBar = StaminaMax;
+
+        // Modifier le layer pour que l'objet puisse uniquement sauté quand il touche le sol (il ne sera plus sur le layer Default)
+        gameObject.layer = 3;
+        // Masse du Rigidbody
+        rb.mass = 8f;
+
+        // Geler la rotation physique
+        rb.freezeRotation = true;
         //UI ui = GetComponent<UI>();
         //ui.SetController(GetComponent<RbCharacterMovements>());
         // Assigner le Spawn position
@@ -64,21 +72,24 @@ public class RbCharacterMovements : MonoBehaviour
         // Vérifier si l'on touche le sol
         isGrounded = Physics.CheckSphere(feetPosition.position, 0.15f, 1, QueryTriggerInteraction.Ignore);
 
-        // *** Vérifier les inputs du joueur ***
+        // Vérifier les inputs du joueur
         // Vertical (W, S et Joystick avant/arrière)
         inputVertical = Input.GetAxis("Vertical");
         // Horizontal (A, D et Joystick gauche/droite)
         inputHorizontal = Input.GetAxis("Horizontal");
-        moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;  
-        
+
+        // Vecteur de mouvements (Avant/arrière + Gauche/Droite)
+        moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+
+        // Rotation du personnage
+        Rotate();
+
         // Sauter
-        if (Input.GetButtonDown("Jump") && isGrounded == true)
-        {
-            rb.AddForce(Vector3.up * Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
-        }
+        if (Input.GetButtonDown("Jump") && isGrounded)
+            Jump();
 
         // Courir
-        if(Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = runningspeed;
             Stamina.fillAmount -= 0.05f * Time.deltaTime;
@@ -209,15 +220,31 @@ public class RbCharacterMovements : MonoBehaviour
     }
 
 
-    public void Feu()
+    //public void Feu()
+    //{
+    //    animatorEly.SetBool("Shoot", true);
+    //    transform.Translate(Vector3.up * Time.deltaTime);
+    //}
+
+    //public void AnnulerFeu()
+    //{
+    //    animatorEly.SetBool("Shoot", false);
+    //    moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+    //}
+
+    void Rotate()
     {
-        animatorEly.SetBool("Shoot", true);
-        transform.Translate(Vector3.up * Time.deltaTime);
+        Vector3 rotPlayer = transform.rotation.eulerAngles;
+
+        // Le player tourne en fonction de la position de la souris (y seulement)
+        rotPlayer.y += Input.GetAxis("Mouse X");
+
+        // Appliquer la rotation rotPlayer dans la rotation du Transform (Quaternion)
+        transform.rotation = Quaternion.Euler(rotPlayer);
     }
 
-    public void AnnulerFeu()
+    void Jump()
     {
-        animatorEly.SetBool("Shoot", false);
-        moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+        rb.AddForce(Vector3.up * Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
     }
 }

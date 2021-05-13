@@ -12,13 +12,13 @@ public class AiSwat : MonoBehaviour
     public float ChasseRange = 10f;
     public int degats = 10;
     public float fireAt = 5f;
-    public float fireRate = 2f;
-    public float attackTime = 1f;
+    public float fireRate = 40f;
+    public float attackTime = 50f;
     public GameObject projectil;
     public GameObject eject;
     public AudioClip SoundFire;
     public AudioClip SoundDead;
-    public int force;
+    public float force = 500f;
     private Animator anim;
     private float nextFire;
     private NavMeshAgent agent;
@@ -199,12 +199,14 @@ public class AiSwat : MonoBehaviour
     {
         // on le tue
         SwatIsdead = true;
+        //GetComponent<Collider>().enabled = false;
         // On fait en sorte qui n'avance plus et on desactive l'animation
         agent.isStopped = true;
         //agent.speed = 0;
         //GetComponent<Collider>().enabled = false;
         //GetComponent<AudioSource>().PlayOneShot(SoundDead);
         anim.SetBool("Dead", true);
+        Destroy(gameObject, 4f);
     }
 
     // Le delais d'attente pour notre muzzle flash

@@ -10,12 +10,14 @@ public class volume : MonoBehaviour
     public Slider volumeAmbiance;
     public Slider volumeFusil;
     public Slider volumeMort;
+    //public Slider slider;
     // Start is called before the first frame update
     void Start()
     {
         volumeAmbiance.onValueChanged.AddListener(volumeAmbiance_OnValueChanged);
         volumeFusil.onValueChanged.AddListener(volumeFusil_OnValueChanged);
         volumeMort.onValueChanged.AddListener(volumeMort_OnValueChanged);
+        //slider.onValueChanged.AddListener(volumeSlider_OnValueChanged);
     }
 
     // Update is called once per frame
@@ -38,4 +40,9 @@ public class volume : MonoBehaviour
     {
 
     }
+
+    //void volumeSlider_OnValueChanged(float value)
+    //{
+    //    Debug.Log("slider : " + value);
+    //}
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -26,6 +28,9 @@ public class WeaponManager : MonoBehaviour
     private Animator animatorEly;
     WeaponManager weaponManager;
     RbCharacterMovements rb;
+    private int Score = 0;
+    private GameObject[] swat;
+    private Ray ray;
 
 
     // Start is called before the first frame update
@@ -38,6 +43,8 @@ public class WeaponManager : MonoBehaviour
         animatorEly = GetComponent<Animator>();
         weaponManager = FindObjectOfType<WeaponManager>();
         rb = FindObjectOfType<RbCharacterMovements>();
+        //TxtScore = GameObject.Find("TxtScore").GetComponent<Text>();
+        swat = GameObject.FindGameObjectsWithTag("Swat");
     }
 
     // Update is called once per frame
@@ -46,6 +53,20 @@ public class WeaponManager : MonoBehaviour
         //Pour effectuer un tir
         if (Input.GetButtonDown("Fire1"))
         {
+            //On centre a l'ecran
+            //Vector2 ScreenCenterPoint = new Vector2(Screen.width / 2, Screen.height / 2);
+            //ray = Camera.main.ScreenPointToRay(ScreenCenterPoint);
+            //if(Physics.Raycast(ray, out hit, Camera.main.farClipPlane))
+            //{
+            //    if (hit.transform.gameObject.CompareTag("Swat"))
+            //    {
+            //        Score += 100;
+            //        TxtScore.text = "Score : " + Score;
+            //        //GameObject.Find
+            //        //GameObject.Find(hit.transform.name).GetComponent<AiSwat>().SwatDead();
+            //    }
+            //}
+
             //animatorEly.SetBool("Shoot", true);
             if(currentBullets > 0)
             {
@@ -60,10 +81,21 @@ public class WeaponManager : MonoBehaviour
             // Si le rayon impacte sur un object, on le propulse
             if (Physics.Raycast(bulletRay, out hit))
             {
+                //if (hit.transform.gameObject.CompareTag("Swat"))
+                //{
+                //    Score += 100;
+                //    TxtScore.text = "Score : " + Score;
+                //    //GameObject.Find
+                //    //GameObject.Find(hit.transform.name).GetComponent<AiSwat>().SwatDead();
+                //}
+
                 // Ragdoll?
                 Ragdoll ragdoll = hit.collider.GetComponentInParent<Ragdoll>();
                 if (ragdoll != null)
                 {
+                    swat = GameObject.FindGameObjectsWithTag("Swat");
+                    Score += 100;
+                    GameObject.Find("TxtScore").GetComponent<Text>().text = "Score:" + Score;
                     ragdoll.die = true;
                     Debug.Log("L'ennemie a ete touche");
                     PlayDeadSound();
@@ -71,10 +103,10 @@ public class WeaponManager : MonoBehaviour
             }
             
         }
-        else
-        {
-            rb.AnnulerFeu();
-        }
+        //else
+        //{
+        //    rb.AnnulerFeu();
+        //}
 
         if(fireTimer < fireRate)
         {
@@ -87,7 +119,7 @@ public class WeaponManager : MonoBehaviour
     public void Fire()
     {
         //animatorEly.SetBool("Shoot", true);
-        rb.Feu();
+        //rb.Feu();
         if (fireTimer < fireRate || currentBullets <= 0)
         {
             return;
@@ -124,6 +156,9 @@ public class WeaponManager : MonoBehaviour
             // nous permet de tuer notre ennemie lorsq'on tire dessus
             if (hit.transform.gameObject.tag == "Swat")
             {
+                Score += 100;
+                //TxtScore.text = "Score : " + Score;
+                //GameObject.Find
                 GameObject.Find(hit.transform.name).GetComponent<AiSwat>().SwatDead();
             }
         }
@@ -191,4 +226,13 @@ public class WeaponManager : MonoBehaviour
     {
         audioSource.PlayOneShot(emptySound);
     }
+
+    //private bool MouseOverUI()
+    //{
+    //    PointerEventData eventData = new PointerEventData(EventSystem.current);
+    //    eventData.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+    //    List<RaycastResult> results = new List<RaycastResult>();
+    //    EventSystem.current.RaycastAll(eventData, results);
+    //    return results.Count > 0;
+    //}
 }
