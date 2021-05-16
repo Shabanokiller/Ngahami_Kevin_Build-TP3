@@ -51,7 +51,7 @@ public class WeaponManager : MonoBehaviour
     void Update()
     {
         //Pour effectuer un tir
-        if (Input.GetButtonDown("Fire1"))
+        if(Input.GetButtonDown("Fire1"))
         {
             //On centre a l'ecran
             //Vector2 ScreenCenterPoint = new Vector2(Screen.width / 2, Screen.height / 2);

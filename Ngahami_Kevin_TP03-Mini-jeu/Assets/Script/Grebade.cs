@@ -6,9 +6,9 @@ public class Grebade : MonoBehaviour
 {
     private PlayerStat playerStat;
     public Rigidbody grenade;
-    public GameObject game;
-    public Transform transform;
-    public float force = 800;
+    //public GameObject game;
+    //public Transform transform;
+    public float force = 50;
 
     // Start is called before the first frame update
     void Start()

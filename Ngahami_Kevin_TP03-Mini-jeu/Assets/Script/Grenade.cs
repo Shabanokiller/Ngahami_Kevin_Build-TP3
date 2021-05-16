@@ -13,11 +13,14 @@ public class Grenade : MonoBehaviour
     bool hasExploded = false;
     public new AudioClip audio;
     private AudioSource audioSource;
-    AiSwat swat;
+    AiSwat Swat;
+    public AudioClip shootSound;
+    private RaycastHit hit;
+    private GameObject[] swat;
     // Start is called before the first frame update
     void Start()
     {
-        swat = GameObject.Find("swat").GetComponent<AiSwat>();
+        Swat = GameObject.Find("swat").GetComponent<AiSwat>();
         countdown = delais;
     }
 
@@ -44,18 +47,35 @@ public class Grenade : MonoBehaviour
         //On applique la force
         foreach (Collider col in colliders)
         {
+            //Ragdoll ragdoll = hit.collider.GetComponentInParent<Ragdoll>();
+            //if (ragdoll != null)
+            //{
+            //    swat = GameObject.FindGameObjectsWithTag("Swat");
+            //    ragdoll.die = true;
+            //    Debug.Log("L'ennemie a ete touche");
+            //    PlayDeadSound();
+            //}
 
             // On ajoute de la force
             Rigidbody rb = col.GetComponent<Rigidbody>();
             if(rb != null)
             {
                 rb.AddExplosionForce(force, transform.position, radius, explose);
+                
             }
             // Les dommages
             Destruction destruction = col.GetComponent<Destruction>();
             if (destruction != null)
             {
-                destruction.Destroy();
+                destruction.Destroy(); 
+                Ragdoll ragdoll = hit.collider.GetComponentInParent<Ragdoll>();
+                if (ragdoll != null)
+                {
+                    swat = GameObject.FindGameObjectsWithTag("Swat");
+                    ragdoll.die = true;
+                    Debug.Log("L'ennemie a ete touche");
+                    PlayDeadSound();
+                }
                 PlayExplosionSound();
             }
                 
@@ -91,11 +111,17 @@ public class Grenade : MonoBehaviour
         {
 
             //Debug.Log("player touche");
-            swat.SwatDead();
+            Swat.SwatDead();
             //playerStat.Dead();
             //GetComponent<PlayerStat>().Dommage(degats);
             PlayExplosionSound();
             //GameObject.Find("ely_k_atienza").GetComponent<HealthBar>().currentHP -= GameObject.Find("swat").GetComponent<AiSwat>().Degats;
         }
+    }
+
+    // fonction pour jouer le son de tir de fusil
+    private void PlayDeadSound()
+    {
+        audioSource.PlayOneShot(shootSound);
     }
 }

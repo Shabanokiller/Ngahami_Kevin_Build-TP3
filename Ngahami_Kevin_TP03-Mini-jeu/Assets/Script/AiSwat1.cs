@@ -14,7 +14,7 @@ public class AiSwat1 : MonoBehaviour
     public GameObject eject;
     public AudioClip SoundFire;
     public AudioClip SoundDead;
-    public int force;
+    public int force = 1800;
     private Animator anim;
     private float nextFire;
     private NavMeshAgent agent;
@@ -25,7 +25,7 @@ public class AiSwat1 : MonoBehaviour
     private bool patrouille = false;
     public float speedWalk = 1f;
     public float speedRun = 6f;
-    public GameObject muzzleFlash;
+    //public GameObject muzzleFlash;
 
 
     // Start is called before the first frame update
@@ -36,7 +36,7 @@ public class AiSwat1 : MonoBehaviour
         pointDepart = transform.position;
         pointDepartA = transform.Find("pointA").GetComponent<Transform>().transform.position;
         pointDepartB = transform.position;
-        muzzleFlash.SetActive(false);
+        //muzzleFlash.SetActive(false);
     }
 
     // Update is called once per frame
@@ -156,7 +156,7 @@ public class AiSwat1 : MonoBehaviour
                     GetComponent<AudioSource>().PlayOneShot(SoundFire);
                     GameObject bullet = Instantiate(projectil, eject.transform.position, Quaternion.identity) as GameObject;
                     bullet.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * force);
-                    muzzleFlash.SetActive(true);
+                    //muzzleFlash.SetActive(true);
                 }
             }
         }
@@ -178,6 +178,6 @@ public class AiSwat1 : MonoBehaviour
     IEnumerator wait()
     {
         yield return new WaitForSeconds(0.05f);
-        muzzleFlash.SetActive(false);
+        //muzzleFlash.SetActive(false);
     }
 }

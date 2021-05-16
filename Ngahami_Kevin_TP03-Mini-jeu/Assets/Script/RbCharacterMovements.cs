@@ -91,12 +91,14 @@ public class RbCharacterMovements : MonoBehaviour
         // Courir
         if (Input.GetKey(KeyCode.LeftShift))
         {
+            weaponManager.enabled = false;
             speed = runningspeed;
             Stamina.fillAmount -= 0.05f * Time.deltaTime;
             if (Stamina.fillAmount >= 0)
             {
                 animatorEly.SetFloat("Vertical", inputVertical * 2f);
                 animatorEly.SetFloat("Horizontal", inputHorizontal * 2f);
+                weaponManager.enabled = false;
             }
 
             if (Stamina.fillAmount <= 0)
@@ -104,6 +106,7 @@ public class RbCharacterMovements : MonoBehaviour
                 speed = walkinggspeed;
                 animatorEly.SetFloat("Vertical", inputVertical);
                 animatorEly.SetFloat("Horizontal", inputHorizontal);
+                weaponManager.enabled = true;
             }
             //speedBarreEnergie -= speedBarreEnergieVide * Time.deltaTime;
             
@@ -111,6 +114,7 @@ public class RbCharacterMovements : MonoBehaviour
         else
         {
             speed = walkinggspeed;
+            weaponManager.enabled = true;
             Stamina.fillAmount += speedBarreEnergieRempli * Time.deltaTime;
             //speedBarreEnergie += speedBarreEnergieRempli * Time.deltaTime;
             animatorEly.SetFloat("Vertical", inputVertical);
