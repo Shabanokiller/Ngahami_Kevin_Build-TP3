@@ -119,6 +119,7 @@ public class RbCharacterMovements : MonoBehaviour
         {
             speed = walkinggspeed;
             weaponManager.enabled = true;
+            weaponManager1.enabled = true;
             Stamina.fillAmount += speedBarreEnergieRempli * Time.deltaTime;
             //speedBarreEnergie += speedBarreEnergieRempli * Time.deltaTime;
             animatorEly.SetFloat("Vertical", inputVertical);

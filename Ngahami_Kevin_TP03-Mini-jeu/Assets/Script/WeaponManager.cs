@@ -43,7 +43,7 @@ public class WeaponManager : MonoBehaviour
         //hitParticule.SetActive(false);
         muzzleFlash.SetActive(false);
         animatorEly = GetComponent<Animator>();
-        weaponManager = FindObjectOfType<WeaponManager>();
+        //weaponManager = FindObjectOfType<WeaponManager>();
         rb = FindObjectOfType<RbCharacterMovements>();
         //TxtScore = GameObject.Find("TxtScore").GetComponent<Text>();
         swat = GameObject.FindGameObjectsWithTag("Swat");

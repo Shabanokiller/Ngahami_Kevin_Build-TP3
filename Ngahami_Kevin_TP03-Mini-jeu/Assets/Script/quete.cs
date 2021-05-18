@@ -14,7 +14,8 @@ public class quete : MonoBehaviour
     public GameObject object2;
     RbCharacterMovements rb;
     CameraPositioner positioner;
-    WeaponManager weaponManager; 
+    WeaponManager weaponManager;
+    WeaponManager weaponManager1;
     public Button btnAccepeter;
     public Button btnRefuser;
 
@@ -24,6 +25,7 @@ public class quete : MonoBehaviour
         rb = FindObjectOfType<RbCharacterMovements>();
         positioner = FindObjectOfType<CameraPositioner>();
         weaponManager = FindObjectOfType<WeaponManager>();
+        weaponManager1 = FindObjectOfType<WeaponManager>();
         btnAccepeter.onClick.AddListener(btnAccepter_OnClick);
         btnRefuser.onClick.AddListener(btnRefuser_OnClick);
         Cursor.lockState = CursorLockMode.Locked;
@@ -71,8 +73,9 @@ public class quete : MonoBehaviour
         object2.SetActive(true);
         Quete.SetActive(false);
         rb.enabled = true;
-        positioner.enabled = true;
-        weaponManager.enabled = true;
+        positioner.enabled = false;
+        weaponManager.enabled = false;
+        weaponManager1.enabled = false;
     }
     //Bouton permettant de refuser notre mission
     void btnRefuser_OnClick()
@@ -81,6 +84,7 @@ public class quete : MonoBehaviour
         rb.enabled = true;
         positioner.enabled = true;
         weaponManager.enabled = true;
+        weaponManager1.enabled = true;
     }
 
     IEnumerator WaitForSec()
