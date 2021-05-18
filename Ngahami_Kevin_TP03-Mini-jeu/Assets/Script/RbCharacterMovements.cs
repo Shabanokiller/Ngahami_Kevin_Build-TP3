@@ -25,6 +25,7 @@ public class RbCharacterMovements : MonoBehaviour
     private float speedBarreEnergie = 1f;
     private float deadzone = 0.1f;
     WeaponManager weaponManager;
+    WeaponManager weaponManager1;
 
     private Vector3 moveDirection;
 
@@ -49,7 +50,8 @@ public class RbCharacterMovements : MonoBehaviour
         //Assigner l'animator
         animatorEly = GetComponent<Animator>();
 
-        weaponManager = FindObjectOfType<WeaponManager>();
+        weaponManager = GameObject.Find("SciFiGunLightBlack").GetComponent<WeaponManager>();
+        weaponManager1 = GameObject.Find("AK74").GetComponent<WeaponManager>();
 
         StaminaBar = StaminaMax;
 
@@ -99,6 +101,7 @@ public class RbCharacterMovements : MonoBehaviour
                 animatorEly.SetFloat("Vertical", inputVertical * 2f);
                 animatorEly.SetFloat("Horizontal", inputHorizontal * 2f);
                 weaponManager.enabled = false;
+                weaponManager1.enabled = false;
             }
 
             if (Stamina.fillAmount <= 0)
@@ -107,6 +110,7 @@ public class RbCharacterMovements : MonoBehaviour
                 animatorEly.SetFloat("Vertical", inputVertical);
                 animatorEly.SetFloat("Horizontal", inputHorizontal);
                 weaponManager.enabled = true;
+                weaponManager1.enabled = true;
             }
             //speedBarreEnergie -= speedBarreEnergieVide * Time.deltaTime;
             
@@ -124,22 +128,22 @@ public class RbCharacterMovements : MonoBehaviour
         speedBarreEnergie = Mathf.Clamp(speedBarreEnergie, 0f, 1f);
 
         // Cacher
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            animatorEly.SetBool("Cacher", true);
-            //rb.AddForce(Vector3.up * Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
-        }
-        else
-        {
-            moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
-            //animatorEly.SetBool("Cacher", false);
-            // *** Vérifier les inputs du joueur ***
-            // Vertical (W, S et Joystick avant/arrière)
-            //inputVertical = Input.GetAxis("Vertical");
-            //// Horizontal (A, D et Joystick gauche/droite)
-            //inputHorizontal = Input.GetAxis("Horizontal");
-            //moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
-        }
+        //if (Input.GetKeyDown(KeyCode.J))
+        //{
+        //    animatorEly.SetBool("Cacher", true);
+        //    //rb.AddForce(Vector3.up * Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+        //}
+        //else
+        //{
+        //    moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+        //    //animatorEly.SetBool("Cacher", false);
+        //    // *** Vérifier les inputs du joueur ***
+        //    // Vertical (W, S et Joystick avant/arrière)
+        //    //inputVertical = Input.GetAxis("Vertical");
+        //    //// Horizontal (A, D et Joystick gauche/droite)
+        //    //inputHorizontal = Input.GetAxis("Horizontal");
+        //    //moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+        //}
 
         //if (weaponManager.Fire() == true)
         //{
@@ -156,16 +160,16 @@ public class RbCharacterMovements : MonoBehaviour
         //}
 
         //Grimper au mur
-        if (!playerGrimpeMur && Input.GetKey(KeyCode.K))
-        {
-            animatorEly.SetBool("EscaladeMur", true);
-            //transform.Translate(Vector3.up * speedGrimpe * Time.deltaTime);
-        }
-        else
-        {
-            animatorEly.SetBool("EscaladeMur", false);
-            //moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
-        }
+        //if (playerGrimpeMur && Input.GetKey(KeyCode.K))
+        //{
+        //    //animatorEly.SetBool("EscaladeMur", true);
+        //    //transform.Translate(Vector3.up * speedGrimpe * Time.deltaTime);
+        //}
+        //else
+        //{
+        //    //animatorEly.SetBool("EscaladeMur", false);
+        //    //rb.MovePosition(rb.position + moveDirection * speed * Time.fixedDeltaTime);
+        //}
 
         //**** Animations de mouvements *****
         //animatorEly.SetFloat("Horizontal", inputHorizontal);
@@ -182,41 +186,41 @@ public class RbCharacterMovements : MonoBehaviour
     }
 
     // Nous permet de detecter si notre trigger est en collision avec notre joueur pour produire notre animataion
-    private void OnTriggerEnter(Collider collider)
-    {
+    //private void OnTriggerEnter(Collider collider)
+    //{
 
-        if (collider.gameObject.tag == "Mur")
-        {
-            //Debug.Log("OK");
-            playerGrimpeMur = true;
-            GetComponent<Rigidbody>().useGravity = false;
-            animatorEly.SetBool("EscaladeMur", true);
-        }
-    }
+    //    if (collider.gameObject.tag == "Mur")
+    //    {
+    //        //Debug.Log("OK");
+    //        playerGrimpeMur = true;
+    //        GetComponent<Rigidbody>().useGravity = false;
+    //        animatorEly.SetBool("EscaladeMur", true);
+    //    }
+    //}
 
     // Nous permet de decter si notre trigger n'est plus en collision avec notre joueur pour annuler notre animataion
-    private void OnTriggerExit(Collider collider)
-    {
+    //private void OnTriggerExit(Collider collider)
+    //{
 
-        if (collider.gameObject.tag == "Mur")
-        {
-            playerGrimpeMur = false;
-            GetComponent<Rigidbody>().useGravity = true;
-            animatorEly.SetBool("EscaladeMur", false);
-            transform.Translate(Vector3.forward * 2);
-        }
-    }
+    //    if (collider.gameObject.tag == "Mur")
+    //    {
+    //        playerGrimpeMur = false;
+    //        GetComponent<Rigidbody>().useGravity = true;
+    //        animatorEly.SetBool("EscaladeMur", false);
+    //        transform.Translate(Vector3.forward * 2);
+    //    }
+    //}
 
-    private void OnTriggerStay(Collider collider)
-    {
-        if (collider.gameObject.tag == "Mur")
-        {
-            //Debug.Log("OK");
-            playerGrimpeMur = true;
-            GetComponent<Rigidbody>().useGravity = false;
-            animatorEly.SetBool("EscaladeMur", true);
-        }
-    }
+    //private void OnTriggerStay(Collider collider)
+    //{
+    //    if (collider.gameObject.tag == "Mur")
+    //    {
+    //        //Debug.Log("OK");
+    //        playerGrimpeMur = true;
+    //        GetComponent<Rigidbody>().useGravity = false;
+    //        animatorEly.SetBool("EscaladeMur", true);
+    //    }
+    //}
 
     public float GetspeedBarreEnergie()
     {

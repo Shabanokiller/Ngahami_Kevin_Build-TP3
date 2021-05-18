@@ -111,15 +111,7 @@ public class PlayerStat : MonoBehaviour
             //options.EndGame();
         }
     }
-
-    public void EndGame()
-    {
-        //GameOver.SetActive(true);
-        Time.timeScale = 0f;
-        end = true;
-        ///pause = !pause;
-    }
-
+    //Nous permet de tuer notre player
     public void Dead()
     {
         Debug.Log("Player Dead");

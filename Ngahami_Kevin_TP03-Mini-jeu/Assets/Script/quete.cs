@@ -2,19 +2,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class quete : MonoBehaviour
 {
-
+    public GameObject Quete;
     private bool GUIText = false;
+    private bool pause = false;
     public int objectAcquire;
     public GameObject object1;
     public GameObject object2;
+    RbCharacterMovements rb;
+    CameraPositioner positioner;
+    WeaponManager weaponManager; 
+    public Button btnAccepeter;
+    public Button btnRefuser;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = FindObjectOfType<RbCharacterMovements>();
+        positioner = FindObjectOfType<CameraPositioner>();
+        weaponManager = FindObjectOfType<WeaponManager>();
+        btnAccepeter.onClick.AddListener(btnAccepter_OnClick);
+        btnRefuser.onClick.AddListener(btnRefuser_OnClick);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -22,57 +34,59 @@ public class quete : MonoBehaviour
     {
         
     }
-
+    //Nous permet de declancher notre mission lorsqu'on entre en collision le trigger
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player"))
         {
+            Cursor.lockState = CursorLockMode.None;
+            Quete.SetActive(true);
+            StartCoroutine("WaitForSec");
             Debug.Log("Jiuer ");
             GUIText = true;
+            //Pause();
+            //rb.enabled = true;
+            //positioner.enabled = true;
+            //weaponManager.enabled = true;
         }
     }
-
+    //Nous permet d'effacer notre mission lorsqu'on sort en collision le trigger
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Quete.SetActive(false);
             GUIText = false;
+            //Resume();
+            //rb.enabled = false;
+            //positioner.enabled = false;
+            //weaponManager.enabled = false;
         }
     }
-
-    private void OnGUI()
+    //Bouton permettant d'accepter notre mission
+    void btnAccepter_OnClick()
     {
-        if(GUIText == true)
-        {
-            if(objectAcquire == 2)
-            {
-                Destroy(gameObject);
-            }
-        }
-        Cursor.visible = true;
-        //Rect Rectangle = new Rect(Screen.width / 2 - 150, Screen.height / 2 - 75, 300, 150);
-        GUI.BeginGroup(new Rect(Screen.width/2 - 150, Screen.height/2 - 75,300,150));
-        GUI.Box(Rect(0, 0, 300, 150), "Nouvelle Sous-Quete");
-        GUI.Label(Rect(10, 20, 200, 300), "Bonjour Agent Wick, nous vennons d'apprendre a l'aide de nos satellites, que SCH mene des activites sur la necromancie, nous voulons savoir si vous pouvez verifier cela?");
-
-        if(GUI.Button(Rect(10, 90, 60, 50), "Accepter"))
-        {
-            object1.SetActive(true);
-            object2.SetActive(true);
-            GUIText = false;
-        }
-
-        if (GUI.Button(Rect(230, 90, 60, 50), "Refuser"))
-        {
-            GUIText = false;
-            Cursor.visible = false;
-        }
-
-        GUI.EndGroup();
+        object1.SetActive(true);
+        object2.SetActive(true);
+        Quete.SetActive(false);
+        rb.enabled = true;
+        positioner.enabled = true;
+        weaponManager.enabled = true;
+    }
+    //Bouton permettant de refuser notre mission
+    void btnRefuser_OnClick()
+    {
+        Quete.SetActive(false);
+        rb.enabled = true;
+        positioner.enabled = true;
+        weaponManager.enabled = true;
     }
 
-    private Rect Rect(int v1, int v2, int v3, int v4)
+    IEnumerator WaitForSec()
     {
-        return Rect(0, 0, 300, 150);
+        yield return new WaitForSeconds(6);
+        Destroy(Quete);
+        Destroy(gameObject);
     }
 }

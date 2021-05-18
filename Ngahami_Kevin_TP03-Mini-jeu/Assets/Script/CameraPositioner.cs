@@ -21,7 +21,7 @@ public class CameraPositioner : MonoBehaviour
     void Start()
     {
         // Vérouiller le curseur dans la fenètre
-        Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.lockState = CursorLockMode.Confined;
 
         // Le transform du joueur
         playerTransform = transform.parent;

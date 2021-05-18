@@ -5,6 +5,7 @@ using UnityEngine;
 public class ramasser : MonoBehaviour
 {
     quete objecteu;
+    public AudioClip audioClip;
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +22,11 @@ public class ramasser : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+
             objecteu.objectAcquire += 1;
-            Destroy(gameObject);
+            GetComponent<AudioSource>().PlayOneShot(audioClip);
+            Debug.Log("Object obtenue");
+            Destroy(gameObject, 0.6f);
         }
     }
 }

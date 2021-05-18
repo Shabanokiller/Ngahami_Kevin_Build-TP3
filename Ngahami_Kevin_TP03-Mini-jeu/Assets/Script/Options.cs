@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class Options : MonoBehaviour
@@ -11,6 +12,8 @@ public class Options : MonoBehaviour
     private bool actif = false;
     RbCharacterMovements rb;
     CameraPositioner positioner;
+    WeaponManager weaponManager;
+    WeaponManager weaponManager1;
 
     //public GameObject pauseMenu;
     // Start is called before the first frame update
@@ -19,6 +22,10 @@ public class Options : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
         rb = FindObjectOfType<RbCharacterMovements>();
         positioner = FindObjectOfType<CameraPositioner>();
+        weaponManager = GameObject.Find("SciFiGunLightBlack").GetComponent<WeaponManager>();
+        weaponManager1 = GameObject.Find("AK74").GetComponent<WeaponManager>();
+        Cursor.lockState = CursorLockMode.Locked;
+        //weaponManager = FindObjectOfType<WeaponManager>();
     }
 
     // Update is called once per frame
@@ -37,19 +44,25 @@ public class Options : MonoBehaviour
         {
             if (pause)
             {
+                Cursor.lockState = CursorLockMode.Locked;
                 visible = !visible;
                 Panel.SetActive(visible);
                 Resume();
                 rb.enabled = true;
                 positioner.enabled = true;
+                weaponManager.enabled = true;
+                weaponManager1.enabled = true;
             }
             else
             {
+                Cursor.lockState = CursorLockMode.None;
                 visible = !visible;
                 Panel.SetActive(visible);
                 Pause();
                 rb.enabled = false;
                 positioner.enabled = false;
+                weaponManager.enabled = false;
+                weaponManager1.enabled = false;
             }
             
         }
@@ -61,6 +74,7 @@ public class Options : MonoBehaviour
         //pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         pause = true;
+        //weaponManager.enabled = false;
         ///pause = !pause;
     }
 
@@ -69,6 +83,7 @@ public class Options : MonoBehaviour
         //pauseMenu.SetActive(true);
         Time.timeScale = 1f;
         pause = false;
+        //weaponManager.enabled = true;
         ///pause = !pause;
     }
 
@@ -79,8 +94,8 @@ public class Options : MonoBehaviour
     //    end = true;
     //    ///pause = !pause;
     //}
-    private bool MouseOverUI()
-    {
-        return EventSystem.current.IsPointerOverGameObject();
-    }
+    //private bool MouseOverUI()
+    //{
+    //    return EventSystem.current.IsPointerOverGameObject();
+    //}
 }

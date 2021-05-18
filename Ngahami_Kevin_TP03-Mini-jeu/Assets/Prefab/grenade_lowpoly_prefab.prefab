@@ -225,11 +225,11 @@ MonoBehaviour:
   delais: 3
   effectExplosion: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b,
     type: 3}
-  radius: 5
+  radius: 20
   force: 50
   explose: 1
   audio: {fileID: 8300000, guid: 57256cfa300e7654abccd9e63cc54653, type: 3}
-  shootSound: {fileID: 8300000, guid: 57256cfa300e7654abccd9e63cc54653, type: 3}
+  shootSound: {fileID: 8300000, guid: f11c12d1c51f45e4eba1040a311601fc, type: 3}
 --- !u!82 &4520833333872769961
 AudioSource:
   m_ObjectHideFlags: 0
@@ -239,7 +239,8 @@ AudioSource:
   m_GameObject: {fileID: 2954064419366190800}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4964864967704964360, guid: 5e04c41367090db488d4d28410cf54a6,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

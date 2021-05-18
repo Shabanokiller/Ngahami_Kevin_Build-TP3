@@ -31,6 +31,7 @@ public class WeaponManager : MonoBehaviour
     private int Score = 0;
     private GameObject[] swat;
     private Ray ray;
+    private Camera mainCam;
 
 
     // Start is called before the first frame update
@@ -38,6 +39,7 @@ public class WeaponManager : MonoBehaviour
     {
         currentBullets = bulletPerMag;
         audioSource = GetComponent<AudioSource>();
+        mainCam = Camera.main;
         //hitParticule.SetActive(false);
         muzzleFlash.SetActive(false);
         animatorEly = GetComponent<Animator>();
@@ -53,6 +55,8 @@ public class WeaponManager : MonoBehaviour
         //Pour effectuer un tir
         if(Input.GetButtonDown("Fire1"))
         {
+            //Permet de creer un rayon entre la camera et le point de la souris 
+            Ray mouseRay = mainCam.ScreenPointToRay(Input.mousePosition);
             //On centre a l'ecran
             //Vector2 ScreenCenterPoint = new Vector2(Screen.width / 2, Screen.height / 2);
             //ray = Camera.main.ScreenPointToRay(ScreenCenterPoint);
@@ -79,8 +83,12 @@ public class WeaponManager : MonoBehaviour
             // Je fais un rayon a partir de BarrelEnd
             Ray bulletRay = new Ray(barrelEnd.position, barrelEnd.forward);
             // Si le rayon impacte sur un object, on le propulse
-            if (Physics.Raycast(bulletRay, out hit))
+            if (Physics.Raycast(mouseRay, out hit))
             {
+                Debug.DrawLine(mouseRay.origin, Camera.main.transform.forward * 300, Color.red);
+                //Debug.Break();
+                //Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
+                //Debug.DrawRay(transform.position , forward, Color.red);
                 //if (hit.transform.gameObject.CompareTag("Swat"))
                 //{
                 //    Score += 100;
@@ -213,18 +221,24 @@ public class WeaponManager : MonoBehaviour
         Debug.Log("Reloading....");
         isReloading = true;
         PlayEmptySound();
-        weaponManager.enabled = false;
+        //weaponManager.enabled = false;
         yield return new WaitForSeconds(reloadTime);
         currentBullets = bulletPerMag;
 
         isReloading = false;
         Debug.Log("Finish Reloading...");
-        weaponManager.enabled = true;
+        //weaponManager.enabled = true;
     }
     // fonction pour jouer le son de chargeur vide 
     private void PlayEmptySound()
     {
         audioSource.PlayOneShot(emptySound);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(barrelEnd.position, barrelEnd.forward);
     }
 
     //private bool MouseOverUI()

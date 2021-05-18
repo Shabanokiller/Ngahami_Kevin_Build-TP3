@@ -177,17 +177,13 @@ public class AiSwat : MonoBehaviour
 
             if (Physics.Raycast(eject.transform.position, transform.TransformDirection(Vector3.forward), out hit))
             {
-                if (hit.transform.gameObject.tag == "Player")
+                if (hit.transform.gameObject.CompareTag("Player"))
                 {
                     // projectil
                     GetComponent<AudioSource>().PlayOneShot(SoundFire);
                     GameObject bullet = Instantiate(projectil, eject.transform.position, Quaternion.identity) as GameObject;
                     bullet.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * force);
-                    //GetComponent<PlayerStat>().Dommage(degats);
-                    //target.SendMessage("Dommage", degats);
-                    //Debug.Log("Ennemie a attaque");
-                    //GetComponent<PlayerStat>().Dommage(degats);
-                    attackTime = Time.time + fireRate;
+                    //attackTime = Time.time + fireRate;
                     muzzleFlash.SetActive(true);
                 }
             }
@@ -205,7 +201,6 @@ public class AiSwat : MonoBehaviour
         //agent.speed = 0;
         //GetComponent<Collider>().enabled = false;
         //GetComponent<AudioSource>().PlayOneShot(SoundDead);
-        anim.SetBool("Dead", true);
         Destroy(gameObject, 4f);
     }
 
